@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="t d">
   <title id="t">第4弾の PR ライフサイクル</title>
-  <desc id="d">1 つの PR が左から右へ 6 つの状態を進む。1 ドラフト PR を出す（4 章。Claude Code が実装し、人間が差分を読んで commit、公開、PR を作成）、2 Codex がレビュー（5 章。PR から作ったワークツリーで gh api を使いインラインコメントを投稿）、3 Ready for review にして auto-merge を予約（7 章。Mark ready の直後、チェックが保留中のうちに有効化する）、4 CI が赤（7 章。test は緑、changelog は赤。ログを読む）、5 Fix broken checks で直して push（8 章。Claude Code が CHANGELOG に 1 行足し、人間が読んで push）、6 auto-merge で自動マージ（8 章。両方が緑になると GitHub がマージし、Issue が閉じる）。5 と 6 の間から灰色の点線で別の道が分岐し、第2弾 8-2 の手動マージ（両方が緑になってから Create merge commit を自分で押す）を示す。auto-merge はその「押す」を GitHub に任せるだけの違い。下の帯は、人間が押す 3 か所: 採否を決める（6 章）、push する（4・6・8 章）、auto-merge を有効にする（7 章）。エージェントは commit も push もしない。</desc>
+  <desc id="d">1 つの PR が左から右へ 6 つの状態を進む。1 ドラフト PR を出す（4 章。Claude Code が実装し、人間が差分を読んで commit、公開、PR を作成）、2 Codex がレビュー（5 章。PR から作ったワークツリーで gh api を使いインラインコメントを投稿）、3 Ready for review にして auto-merge を予約（7 章。Mark ready の後、チェックが通る前に有効化する。失敗中でもよい）、4 CI が赤（7 章。test は緑、changelog は赤。ログを読む）、5 Fix broken checks で直して push（8 章。Claude Code が CHANGELOG に 1 行足し、人間が読んで push）、6 auto-merge で自動マージ（8 章。両方が緑になると GitHub がマージし、Issue が閉じる）。5 と 6 の間から灰色の点線で別の道が分岐し、第2弾 8-2 の手動マージ（両方が緑になってから Create merge commit を自分で押す）を示す。auto-merge はその「押す」を GitHub に任せるだけの違い。下の帯は、人間が押す 3 か所: 採否を決める（6 章）、push する（4・6・8 章）、auto-merge を有効にする（7 章）。エージェントは commit も push もしない。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
@@ -63,7 +63,7 @@
   <text x="371" y="121" class="b600 mid" fill="#8250DF">Ready にして</text>
   <text x="371" y="139" class="b600 mid" fill="#8250DF">auto-merge 予約</text>
   <text x="371" y="176" class="cap mid">Mark ready の直後、</text>
-  <text x="371" y="192" class="cap mid">チェックが保留中に</text>
+  <text x="371" y="192" class="cap mid">チェックが通る前に</text>
   <text x="371" y="208" class="cap mid">有効化する</text>
 
   <!-- 4: CI が赤（danger） -->

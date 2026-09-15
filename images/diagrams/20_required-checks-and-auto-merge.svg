@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 568" width="880" height="568" role="img" aria-labelledby="t d">
   <title id="t">必須チェックと auto-merge の関係</title>
-  <desc id="d">3 段の図。上段はルールセット main-required-checks が main を守る層: 必須チェックは test と changelog（GitHub Actions のジョブ名）、main の削除と force push を禁止、直接 push もできない（チェックが付かないから）。中段は PR のチェック状態が 3 通り。左（黄色）は保留中（チェック実行中）: まだマージできないので Enable auto-merge を予約できる。これが 7 章の窓で、Mark ready の直後、test から changelog へ進む 1.5〜2 分の間。中央（赤）は失敗中（changelog が赤）: まだマージできないが、予約はできないので先に直す。すでに予約済みなら有効のまま待つ（要確認）。直して push すれば再実行される。右（緑）は両方が成功: 今すぐマージできるので普通のマージボタンが出て、予約の選択肢は出ない。予約済みなら GitHub がマージし、未予約なら自分で押す（第2弾 8-2）。中段の下に本編の流れ: 保留中に予約（7 章）→ changelog が失敗（7 章）→ 直して push すると再実行 → 両方成功 → GitHub がマージ（8 章）。下段は左から右へ 4 つの箱: 予約済み + 両方成功 → GitHub がマージ → Closes #1 で Issue が閉じる → ブランチ自動削除。赤い帯の注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る。だから差分を読んでから push し、エージェントに push させない。最下部の補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えないため、第4弾は public で複製する。</desc>
+  <desc id="d">3 段の図。上段はルールセット main-required-checks が main を守る層: 必須チェックは test と changelog（GitHub Actions のジョブ名）、main の削除と force push を禁止、直接 push もできない（チェックが付かないから）。中段は PR のチェック状態が 3 通り。左（黄色）は保留中（チェック実行中）: まだマージできないので「自動マージを有効にする」で予約できる。Mark ready の直後、test から changelog へ進む約 20 秒の間。中央（赤）は失敗中（changelog が赤）: まだマージできないので、ここでも予約できる。すでに予約済みなら有効のまま待つ。直して push すれば再実行される。右（緑）は両方が成功: 今すぐマージできるので普通のマージボタンが出て、予約の選択肢は出ない。予約済みなら GitHub がマージし、未予約なら自分で押す（第2弾 8-2）。中段の下に本編の流れ: 保留中に予約（7 章）→ changelog が失敗（7 章）→ 直して push すると再実行 → 両方成功 → GitHub がマージ（8 章）。下段は左から右へ 4 つの箱: 予約済み + 両方成功 → GitHub がマージ → Closes #1 で Issue が閉じる → ブランチ自動削除。赤い帯の注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る。だから差分を読んでから push し、エージェントに push させない。最下部の補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えないため、第4弾は public で複製する。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
@@ -42,16 +42,16 @@
   <rect x="24" y="200" width="248" height="136" rx="8" fill="#FFF8C5" stroke="#BF8700" class="box"/>
   <text x="40" y="224" class="b600" fill="#9A6700">1 保留中（チェック実行中）</text>
   <text x="40" y="248" class="body">→ まだマージできない</text>
-  <text x="40" y="268" class="body">→ <tspan class="ui">Enable auto-merge</tspan> を予約できる</text>
+  <text x="40" y="268" class="body">→ <tspan class="ui">自動マージを有効にする</tspan> で予約できる</text>
   <text x="40" y="296" class="cap">7 章の窓。Mark ready の直後、</text>
-  <text x="40" y="312" class="cap">test → changelog と進む 1.5〜2 分の間</text>
+  <text x="40" y="312" class="cap">test → changelog と進む約 20 秒の間</text>
 
   <!-- 中段 中央: 失敗中 -->
   <rect x="316" y="200" width="248" height="136" rx="8" fill="#FFEBE9" stroke="#CF222E" class="box"/>
   <text x="332" y="224" class="b600" fill="#CF222E">2 失敗中（changelog が赤）</text>
   <text x="332" y="248" class="body">→ まだマージできない</text>
-  <text x="332" y="268" class="body">→ 予約は <tspan font-weight="600">できない</tspan>（先に直す）</text>
-  <text x="332" y="296" class="cap">すでに予約済みなら有効のまま待つ（要確認）</text>
+  <text x="332" y="268" class="body">→ 予約は <tspan font-weight="600">できる</tspan>（急がなくてよい）</text>
+  <text x="332" y="296" class="cap">すでに予約済みなら有効のまま待つ</text>
   <text x="332" y="312" class="cap">直して push すればチェックが再実行される</text>
 
   <!-- 中段 右: 両方成功 -->
@@ -64,7 +64,7 @@
   <text x="624" y="324" class="cap">未予約なら自分で押す（第2弾 8-2）</text>
 
   <!-- 本編の流れ（キャプション） -->
-  <text x="24" y="360" class="cap">本編の流れ: 1 保留中に予約（7 章）→ 2 changelog が失敗（7 章）→ 直して push すると再実行 → 3 両方成功 → GitHub がマージ（8 章）</text>
+  <text x="24" y="360" class="cap">本編の流れ: 1 か 2 で予約（7 章）→ 2 changelog が失敗（7 章）→ 直して push すると再実行 → 3 両方成功 → GitHub がマージ（8 章）</text>
 
   <!-- 3 → 下段（右から左へ回り込む） -->
   <path d="M732,336 V372 H134 V388" class="arrow"/>
