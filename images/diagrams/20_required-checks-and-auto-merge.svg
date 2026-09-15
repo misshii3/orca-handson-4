@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 568" width="880" height="568" role="img" aria-labelledby="t d">
+  <title id="t">必須チェックと auto-merge の関係</title>
+  <desc id="d">3 段の図。上段はルールセット main-required-checks が main を守る層: 必須チェックは test と changelog（GitHub Actions のジョブ名）、main の削除と force push を禁止、直接 push もできない（チェックが付かないから）。中段は PR のチェック状態が 3 通り。左（黄色）は保留中（チェック実行中）: まだマージできないので Enable auto-merge を予約できる。これが 7 章の窓で、Mark ready の直後、test から changelog へ進む 1.5〜2 分の間。中央（赤）は失敗中（changelog が赤）: まだマージできないが、予約はできないので先に直す。すでに予約済みなら有効のまま待つ（要確認）。直して push すれば再実行される。右（緑）は両方が成功: 今すぐマージできるので普通のマージボタンが出て、予約の選択肢は出ない。予約済みなら GitHub がマージし、未予約なら自分で押す（第2弾 8-2）。中段の下に本編の流れ: 保留中に予約（7 章）→ changelog が失敗（7 章）→ 直して push すると再実行 → 両方成功 → GitHub がマージ（8 章）。下段は左から右へ 4 つの箱: 予約済み + 両方成功 → GitHub がマージ → Closes #1 で Issue が閉じる → ブランチ自動削除。赤い帯の注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る。だから差分を読んでから push し、エージェントに push させない。最下部の補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えないため、第4弾は public で複製する。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif; fill: #1F2328; }
+      .title { font-size: 20px; font-weight: bold; }
+      .body { font-size: 13px; }
+      .b600 { font-size: 13px; font-weight: 600; }
+      .cap { font-size: 12px; fill: #57606A; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+      .ui { font-size: 12px; font-weight: 600; }
+      .mid { text-anchor: middle; }
+      .box { stroke-width: 1.5; }
+      .arrow { fill: none; stroke: #57606A; stroke-width: 1.75; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <!-- 背景カード -->
+  <rect x="0.5" y="0.5" width="879" height="567" rx="12" fill="#FFFFFF" stroke="#D0D7DE"/>
+
+  <!-- タイトル -->
+  <text x="24" y="40" class="title">必須チェックと auto-merge: 「まだマージできない」ときだけ予約できる</text>
+  <text x="24" y="62" class="cap">scripts/setup-repo.sh が作るルールセットが土台。auto-merge（自動マージの予約）はその上で動く</text>
+
+  <!-- 上段: ルールセット -->
+  <rect x="24" y="84" width="832" height="80" rx="8" fill="#FBEFFF" stroke="#8250DF" class="box"/>
+  <text x="40" y="108" class="b600" fill="#8250DF">ルールセット <tspan class="mono">main-required-checks</tspan> が main を守る</text>
+  <text x="40" y="130" class="body">必須チェック: <tspan class="mono">test</tspan> と <tspan class="mono">changelog</tspan>（GitHub Actions のジョブ名）。両方が緑になるまで PR はマージできない</text>
+  <text x="40" y="150" class="body">main の削除と force push を禁止。main への直接 push もできない（チェックが付かないから）</text>
+
+  <!-- 上段 → 中段（3 本） -->
+  <path d="M148,164 V200" class="arrow"/>
+  <path d="M440,164 V200" class="arrow"/>
+  <path d="M732,164 V200" class="arrow"/>
+  <text x="294" y="188" class="cap mid">チェックの状態で、マージボタンが変わる</text>
+
+  <!-- 中段 左: 保留中 -->
+  <rect x="24" y="200" width="248" height="136" rx="8" fill="#FFF8C5" stroke="#BF8700" class="box"/>
+  <text x="40" y="224" class="b600" fill="#9A6700">1 保留中（チェック実行中）</text>
+  <text x="40" y="248" class="body">→ まだマージできない</text>
+  <text x="40" y="268" class="body">→ <tspan class="ui">Enable auto-merge</tspan> を予約できる</text>
+  <text x="40" y="296" class="cap">7 章の窓。Mark ready の直後、</text>
+  <text x="40" y="312" class="cap">test → changelog と進む 1.5〜2 分の間</text>
+
+  <!-- 中段 中央: 失敗中 -->
+  <rect x="316" y="200" width="248" height="136" rx="8" fill="#FFEBE9" stroke="#CF222E" class="box"/>
+  <text x="332" y="224" class="b600" fill="#CF222E">2 失敗中（changelog が赤）</text>
+  <text x="332" y="248" class="body">→ まだマージできない</text>
+  <text x="332" y="268" class="body">→ 予約は <tspan font-weight="600">できない</tspan>（先に直す）</text>
+  <text x="332" y="296" class="cap">すでに予約済みなら有効のまま待つ（要確認）</text>
+  <text x="332" y="312" class="cap">直して push すればチェックが再実行される</text>
+
+  <!-- 中段 右: 両方成功 -->
+  <rect x="608" y="200" width="248" height="136" rx="8" fill="#DAFBE1" stroke="#1A7F37" class="box"/>
+  <text x="624" y="224" class="b600" fill="#1A7F37">3 両方が成功</text>
+  <text x="624" y="248" class="body">→ 今すぐマージできる</text>
+  <text x="624" y="268" class="body">→ 普通のマージボタンが出る</text>
+  <text x="624" y="292" class="cap">予約の選択肢は出ない</text>
+  <text x="624" y="308" class="cap">予約済みなら GitHub がマージする</text>
+  <text x="624" y="324" class="cap">未予約なら自分で押す（第2弾 8-2）</text>
+
+  <!-- 本編の流れ（キャプション） -->
+  <text x="24" y="360" class="cap">本編の流れ: 1 保留中に予約（7 章）→ 2 changelog が失敗（7 章）→ 直して push すると再実行 → 3 両方成功 → GitHub がマージ（8 章）</text>
+
+  <!-- 3 → 下段（右から左へ回り込む） -->
+  <path d="M732,336 V372 H134 V388" class="arrow"/>
+
+  <!-- 下段: 自動マージの流れ -->
+  <rect x="44" y="388" width="180" height="56" rx="8" fill="#DAFBE1" stroke="#1A7F37" class="box"/>
+  <text x="134" y="411" class="b600 mid" fill="#1A7F37">予約済み</text>
+  <text x="134" y="429" class="b600 mid" fill="#1A7F37">+ 両方成功</text>
+  <path d="M224,416 H248" class="arrow"/>
+  <rect x="248" y="388" width="180" height="56" rx="8" fill="#FBEFFF" stroke="#8250DF" class="box"/>
+  <text x="338" y="420.5" class="b600 mid" fill="#8250DF">GitHub がマージ</text>
+  <path d="M428,416 H452" class="arrow"/>
+  <rect x="452" y="388" width="180" height="56" rx="8" fill="#DAFBE1" stroke="#1A7F37" class="box"/>
+  <text x="542" y="411" class="b600 mid" fill="#1A7F37">Closes #1 で</text>
+  <text x="542" y="429" class="b600 mid" fill="#1A7F37">Issue が閉じる</text>
+  <path d="M632,416 H656" class="arrow"/>
+  <rect x="656" y="388" width="180" height="56" rx="8" fill="#F6F8FA" stroke="#D0D7DE" class="box"/>
+  <text x="746" y="411" class="b600 mid">ブランチ自動削除</text>
+  <text x="746" y="429" class="cap mid">delete-branch-on-merge</text>
+
+  <!-- 注意帯 -->
+  <rect x="24" y="464" width="832" height="56" rx="8" fill="#FFEBE9" stroke="#CF222E" class="box"/>
+  <text x="40" y="487" class="b600" fill="#CF222E">注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る</text>
+  <text x="40" y="507" class="body">だから、差分を読んでから push する。エージェントに commit や push をさせない（付録 E）</text>
+
+  <!-- 補足 -->
+  <text x="24" y="548" class="cap">補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えない。そのため第4弾は public で複製する（2 章、付録 C）</text>
+</svg>

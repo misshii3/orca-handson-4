@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 400" width="880" height="400" role="img" aria-labelledby="t d">
+  <title id="t">第4弾の PR ライフサイクル</title>
+  <desc id="d">1 つの PR が左から右へ 6 つの状態を進む。1 ドラフト PR を出す（4 章。Claude Code が実装し、人間が差分を読んで commit、公開、PR を作成）、2 Codex がレビュー（5 章。PR から作ったワークツリーで gh api を使いインラインコメントを投稿）、3 Ready for review にして auto-merge を予約（7 章。Mark ready の直後、チェックが保留中のうちに有効化する）、4 CI が赤（7 章。test は緑、changelog は赤。ログを読む）、5 Fix broken checks で直して push（8 章。Claude Code が CHANGELOG に 1 行足し、人間が読んで push）、6 auto-merge で自動マージ（8 章。両方が緑になると GitHub がマージし、Issue が閉じる）。5 と 6 の間から灰色の点線で別の道が分岐し、第2弾 8-2 の手動マージ（両方が緑になってから Create merge commit を自分で押す）を示す。auto-merge はその「押す」を GitHub に任せるだけの違い。下の帯は、人間が押す 3 か所: 採否を決める（6 章）、push する（4・6・8 章）、auto-merge を有効にする（7 章）。エージェントは commit も push もしない。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8C959F"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif; fill: #1F2328; }
+      .title { font-size: 20px; font-weight: bold; }
+      .body { font-size: 13px; }
+      .b600 { font-size: 13px; font-weight: 600; }
+      .cap { font-size: 12px; fill: #57606A; }
+      .cap11 { font-size: 11px; fill: #57606A; }
+      .chip { font-size: 11px; font-weight: 700; }
+      .mid { text-anchor: middle; }
+      .box { stroke-width: 1.5; }
+      .arrow { fill: none; stroke: #57606A; stroke-width: 1.75; marker-end: url(#arrow); }
+      .alt { fill: none; stroke: #8C959F; stroke-width: 1.5; stroke-dasharray: 5 4; marker-end: url(#arrow-gray); }
+    </style>
+  </defs>
+
+  <!-- 背景カード -->
+  <rect x="0.5" y="0.5" width="879" height="399" rx="12" fill="#FFFFFF" stroke="#D0D7DE"/>
+
+  <!-- タイトル -->
+  <text x="24" y="40" class="title">PR を出した後: ドラフト → レビュー → 赤 → 直す → 自動マージ</text>
+  <text x="24" y="62" class="cap">第4弾で 1 つの PR がたどる 6 つの状態。丸の中は章番号</text>
+
+  <!-- 章バッジ -->
+  <g class="chip mid">
+    <rect x="80" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="95" y="88">4 章</text>
+    <rect x="218" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="233" y="88">5 章</text>
+    <rect x="356" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="371" y="88">7 章</text>
+    <rect x="494" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="509" y="88">7 章</text>
+    <rect x="632" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="647" y="88">8 章</text>
+    <rect x="770" y="76" width="30" height="16" rx="8" fill="#F6F8FA" stroke="#D0D7DE"/><text x="785" y="88">8 章</text>
+  </g>
+
+  <!-- 1: ドラフト PR（git / PR = 紫） -->
+  <rect x="35" y="98" width="120" height="56" rx="8" fill="#FBEFFF" stroke="#8250DF" class="box"/>
+  <text x="95" y="121" class="b600 mid" fill="#8250DF">ドラフト PR</text>
+  <text x="95" y="139" class="b600 mid" fill="#8250DF">を出す</text>
+  <text x="95" y="176" class="cap mid">Claude Code が実装</text>
+  <text x="95" y="192" class="cap mid">人間が差分を読み</text>
+  <text x="95" y="208" class="cap mid">commit → 公開 → PR</text>
+
+  <!-- 2: Codex がレビュー（Codex = 青） -->
+  <path d="M155,126 H173" class="arrow"/>
+  <rect x="173" y="98" width="120" height="56" rx="8" fill="#DDF4FF" stroke="#0969DA" class="box"/>
+  <text x="233" y="121" class="b600 mid" fill="#0969DA">Codex が</text>
+  <text x="233" y="139" class="b600 mid" fill="#0969DA">レビュー</text>
+  <text x="233" y="176" class="cap mid">PR から作った WT で</text>
+  <text x="233" y="192" class="cap mid">gh api でインライン</text>
+  <text x="233" y="208" class="cap mid">コメントを投稿</text>
+
+  <!-- 3: Ready + auto-merge 予約（PR の状態 = 紫） -->
+  <path d="M293,126 H311" class="arrow"/>
+  <rect x="311" y="98" width="120" height="56" rx="8" fill="#FBEFFF" stroke="#8250DF" class="box"/>
+  <text x="371" y="121" class="b600 mid" fill="#8250DF">Ready にして</text>
+  <text x="371" y="139" class="b600 mid" fill="#8250DF">auto-merge 予約</text>
+  <text x="371" y="176" class="cap mid">Mark ready の直後、</text>
+  <text x="371" y="192" class="cap mid">チェックが保留中に</text>
+  <text x="371" y="208" class="cap mid">有効化する</text>
+
+  <!-- 4: CI が赤（danger） -->
+  <path d="M431,126 H449" class="arrow"/>
+  <rect x="449" y="98" width="120" height="56" rx="8" fill="#FFEBE9" stroke="#CF222E" class="box"/>
+  <text x="509" y="121" class="b600 mid" fill="#CF222E">CI が赤</text>
+  <text x="509" y="139" class="b600 mid" fill="#CF222E">changelog 失敗</text>
+  <text x="509" y="176" class="cap mid">test は緑、</text>
+  <text x="509" y="192" class="cap mid">changelog は赤</text>
+  <text x="509" y="208" class="cap mid">ログを読む</text>
+
+  <!-- 5: Fix broken checks → push（Claude Code = 橙） -->
+  <path d="M569,126 H587" class="arrow"/>
+  <rect x="587" y="98" width="120" height="56" rx="8" fill="#FFF1E5" stroke="#D97757" class="box"/>
+  <text x="647" y="121" class="b600 mid" fill="#9A4A2B">Fix broken</text>
+  <text x="647" y="139" class="b600 mid" fill="#9A4A2B">checks → push</text>
+  <text x="647" y="176" class="cap mid">Claude Code が</text>
+  <text x="647" y="192" class="cap mid">CHANGELOG に 1 行</text>
+  <text x="647" y="208" class="cap mid">人間が読んで push</text>
+
+  <!-- 6: auto-merge で自動マージ（success） -->
+  <path d="M707,126 H725" class="arrow"/>
+  <rect x="725" y="98" width="120" height="56" rx="8" fill="#DAFBE1" stroke="#1A7F37" class="box"/>
+  <text x="785" y="121" class="b600 mid" fill="#1A7F37">auto-merge で</text>
+  <text x="785" y="139" class="b600 mid" fill="#1A7F37">自動マージ</text>
+  <text x="785" y="176" class="cap mid">両方が緑になると</text>
+  <text x="785" y="192" class="cap mid">GitHub がマージ →</text>
+  <text x="785" y="208" class="cap mid">Issue クローズ</text>
+
+  <!-- 別の道: 手動マージ（灰色の点線） -->
+  <path d="M716,126 V236" class="alt"/>
+  <rect x="449" y="236" width="396" height="64" rx="8" fill="#F6F8FA" stroke="#8C959F" class="box" stroke-dasharray="5 4"/>
+  <text x="465" y="257" class="b600" fill="#57606A">別の道: 手動マージ（第2弾 8-2）</text>
+  <text x="465" y="274" class="cap">両方が緑になってから Create merge commit を自分で押す</text>
+  <text x="465" y="290" class="cap">auto-merge は、その「押す」を GitHub に任せるだけの違い</text>
+
+  <!-- 下帯: 人間が押す 3 か所 -->
+  <rect x="24" y="320" width="832" height="60" rx="8" fill="#F6F8FA" stroke="#D0D7DE" stroke-width="1"/>
+  <text x="40" y="342" class="b600">人間が押す 3 か所</text>
+  <text x="168" y="342" class="cap">エージェントは commit も push もしない。この 3 か所で人間が差分と結果を読む</text>
+  <g class="body">
+    <rect x="40" y="352" width="228" height="22" rx="11" fill="#FFFFFF" stroke="#1F2328" stroke-width="1.25"/>
+    <text x="154" y="367.5" class="mid">採否を決める（6 章）</text>
+    <rect x="292" y="352" width="228" height="22" rx="11" fill="#FFFFFF" stroke="#1F2328" stroke-width="1.25"/>
+    <text x="406" y="367.5" class="mid">差分を読んで push（4・6・8 章）</text>
+    <rect x="544" y="352" width="296" height="22" rx="11" fill="#FFFFFF" stroke="#1F2328" stroke-width="1.25"/>
+    <text x="692" y="367.5" class="mid">auto-merge を有効にする（7 章）</text>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" width="880" height="560" role="img" aria-labelledby="t d">
+  <title id="t">レビューコメントの往復</title>
+  <desc id="d">3 つの箱が横に並ぶ。左は issue-1 ワークツリー（Claude Code、実装する側）: Issue #1 を実装し、レビューの採否を受けて直し、Fix broken checks を受けて CHANGELOG に 1 行足す。人間が差分を読んで commit と push をする。中央は GitHub の PR #2: ドラフトから Ready for review へ、レビュースレッド（インラインコメント）、チェック test と changelog、auto-merge でマージされ Issue #1 が閉じる。右は review-pr-2 ワークツリー（Codex、レビューする側）: PR #2 から作り、gh pr diff 2 と npm test で読み、gh api の pulls/2/reviews に【必須】【提案】【質問】のコメントを投稿する。ファイルは直さない。中央の下に Orca の PR パネル（#1 のワークツリーで開く）が橋としてある。矢印は 7 本: ① Claude Code が Issue #1 を実装し人間が差分を読んで commit と公開、② ドラフト PR #2 を作る、③ Codex が PR #2 から作ったワークツリーで差分とテストを読む、④ gh api でインラインコメント 2〜4 件とまとめ 1 件を投稿、⑤ 人間が PR パネルでスレッドを読み採否を決める、⑥ 採否を Claude Code に伝えて直させ人間が差分を読んで push、⑦ PR パネルからスレッドに返信し、採用は 👍、見送りは 😕 のリアクション。下の帯: Codex はファイルを直さない（レビュー専用）。コミットと push は人間が行う。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif; fill: #1F2328; }
+      .title { font-size: 20px; font-weight: bold; }
+      .body { font-size: 13px; }
+      .b600 { font-size: 13px; font-weight: 600; }
+      .cap { font-size: 12px; fill: #57606A; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+      .mid { text-anchor: middle; }
+      .num { font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .box { stroke-width: 1.5; }
+      .arrow { fill: none; stroke: #57606A; stroke-width: 1.75; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <!-- 背景カード -->
+  <rect x="0.5" y="0.5" width="879" height="559" rx="12" fill="#FFFFFF" stroke="#D0D7DE"/>
+
+  <!-- タイトル -->
+  <text x="24" y="40" class="title">レビューの往復: 書く人（Claude Code）と見る人（Codex）を分ける</text>
+  <text x="24" y="62" class="cap">GitHub の PR #2 を真ん中に置き、2 つのワークツリーがそれぞれの役割で関わる。①〜⑦ は下の説明</text>
+
+  <!-- 左: issue-1（Claude Code = 橙） -->
+  <rect x="24" y="88" width="232" height="212" rx="8" fill="#FFF1E5" stroke="#D97757" class="box"/>
+  <text x="40" y="112" class="b600" fill="#9A4A2B">issue-1 ワークツリー</text>
+  <text x="40" y="130" class="cap">Claude Code（実装する側）</text>
+  <text x="40" y="158" class="body">・Issue #1 を実装する</text>
+  <text x="40" y="178" class="body">・採用された指摘を直す</text>
+  <text x="40" y="198" class="body">・Fix broken checks を受けて</text>
+  <text x="40" y="216" class="body">　CHANGELOG に 1 行足す</text>
+  <text x="40" y="246" class="cap">commit と push は人間。</text>
+  <text x="40" y="262" class="cap">PR パネルもこのワークツリーで開く</text>
+  <circle cx="230" cy="106" r="10" fill="#FFFFFF" stroke="#D97757" stroke-width="1.5"/>
+  <text x="230" y="110.5" class="num" fill="#9A4A2B">①</text>
+
+  <!-- 中央: GitHub PR #2（git / PR = 紫） -->
+  <rect x="324" y="88" width="232" height="212" rx="8" fill="#FBEFFF" stroke="#8250DF" class="box"/>
+  <text x="340" y="112" class="b600" fill="#8250DF">GitHub: PR #2</text>
+  <text x="340" y="130" class="cap">Issue は #1 だけなので PR は #2</text>
+  <text x="340" y="158" class="body">・ドラフト → Ready for review</text>
+  <text x="340" y="178" class="body">・レビュースレッド</text>
+  <text x="340" y="196" class="body">　（行に付くインラインコメント）</text>
+  <text x="340" y="216" class="body">・チェック: test / changelog</text>
+  <text x="340" y="236" class="body">・auto-merge → マージ</text>
+  <text x="340" y="254" class="body">　→ Closes #1 で Issue が閉じる</text>
+
+  <!-- 右: review-pr-2（Codex = 青） -->
+  <rect x="624" y="88" width="232" height="212" rx="8" fill="#DDF4FF" stroke="#0969DA" class="box"/>
+  <text x="640" y="112" class="b600" fill="#0969DA">review-pr-2 ワークツリー</text>
+  <text x="640" y="130" class="cap">Codex（レビューする側）</text>
+  <text x="640" y="158" class="body">・PR #2 から作る</text>
+  <text x="640" y="178" class="body">・<tspan class="mono">gh pr diff 2</tspan> と <tspan class="mono">npm test</tspan></text>
+  <text x="640" y="196" class="body">　で読む</text>
+  <text x="640" y="216" class="body">・<tspan class="mono">gh api …/pulls/2/reviews</tspan></text>
+  <text x="640" y="234" class="body">　に【必須】【提案】【質問】を投稿</text>
+  <text x="640" y="262" class="cap">ファイルは直さない（レビュー専用）</text>
+
+  <!-- ② 左 → 中央（上） -->
+  <path d="M256,150 H324" class="arrow"/>
+  <circle cx="290" cy="136" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="290" y="140.5" class="num">②</text>
+
+  <!-- ③ 中央 → 右（上） -->
+  <path d="M556,150 H624" class="arrow"/>
+  <circle cx="590" cy="136" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="590" y="140.5" class="num">③</text>
+
+  <!-- ④ 右 → 中央（下） -->
+  <path d="M624,250 H556" class="arrow"/>
+  <circle cx="590" cy="266" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="590" y="270.5" class="num">④</text>
+
+  <!-- PR パネル（橋） -->
+  <rect x="324" y="340" width="232" height="56" rx="8" fill="#F6F8FA" stroke="#1F2328" class="box"/>
+  <text x="440" y="363" class="b600 mid">Orca の PR パネル</text>
+  <text x="440" y="381" class="cap mid">#1 のワークツリーで開く（第2弾と同じ）</text>
+
+  <!-- ⑤ 中央 → パネル（下向き） -->
+  <path d="M400,300 V340" class="arrow"/>
+  <circle cx="384" cy="320" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="384" y="324.5" class="num">⑤</text>
+
+  <!-- ⑦ パネル → 中央（上向き） -->
+  <path d="M480,340 V300" class="arrow"/>
+  <circle cx="496" cy="320" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="496" y="324.5" class="num">⑦</text>
+
+  <!-- ⑥ パネル → 左の箱（下から） -->
+  <path d="M324,368 H140 V300" class="arrow"/>
+  <circle cx="232" cy="352" r="10" fill="#FFFFFF" stroke="#57606A" stroke-width="1.5"/>
+  <text x="232" y="356.5" class="num">⑥</text>
+
+  <!-- 番号の説明（2 列） -->
+  <g class="cap">
+    <text x="40" y="430">① Claude Code が Issue #1 を実装。人間が差分を読み commit → 公開</text>
+    <text x="40" y="450">② ドラフト PR #2 を作る（PR を作成 → ドラフト）</text>
+    <text x="40" y="470">③ Codex が PR #2 から作ったワークツリーで差分とテストを読む</text>
+    <text x="40" y="490">④ gh api でインラインコメント 2〜4 件 + まとめ 1 件を投稿</text>
+    <text x="456" y="430">⑤ 人間が PR パネルでスレッドを読み、採否を決める</text>
+    <text x="456" y="450">⑥ 採否を Claude Code に伝えて直させ、人間が差分を読んで push</text>
+    <text x="456" y="470">⑦ PR パネルからスレッドに返信。👍 採用 ／ 😕 見送り（理由を書く）</text>
+  </g>
+
+  <!-- 下帯 -->
+  <rect x="24" y="504" width="832" height="40" rx="8" fill="#F6F8FA" stroke="#D0D7DE" stroke-width="1"/>
+  <text x="40" y="529" class="body"><tspan font-weight="600">Codex はファイルを直さない</tspan>（レビュー専用）／ <tspan font-weight="600">コミットと push は人間</tspan>（エージェントには毎回「コミットも push もしない」と伝える）</text>
+</svg>

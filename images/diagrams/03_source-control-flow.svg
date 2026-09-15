@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 428" width="880" height="428" role="img" aria-labelledby="t d">
+  <title id="t">Source Control パネルのボタンと git の段階の対応</title>
+  <desc id="d">上の段は Orca の Source Control パネルの見え方。変更点 2 で「＋ ステージオール」を押すとステージ済みの変更 2 と「✓ Commit」になり、Commit（⌘↩）すると「ブランチを公開」と ↑1 が出る。押すと push され「PR を作成」が押せる。押すと PR #3 が OPEN になる。下の段は対応する git の概念で、作業ツリー、インデックス、ローカルコミット、origin（GitHub 上の自分のリポ）、Pull Request（自分のリポの main へ）。ボタンの文言が今どの段階かを表す。</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
+    </marker>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif; fill: #1F2328; }
+      .title { font-size: 20px; font-weight: bold; }
+      .head { font-size: 15px; font-weight: 600; }
+      .body { font-size: 13px; }
+      .b600 { font-size: 13px; font-weight: 600; }
+      .cap { font-size: 12px; fill: #57606A; }
+      .ui { font-size: 12px; font-weight: 600; }
+      .mono12 { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; }
+      .mid { text-anchor: middle; }
+      .panel { fill: #FFFFFF; stroke: #D0D7DE; stroke-width: 1.5; }
+      .btn { fill: #F6F8FA; stroke: #D0D7DE; stroke-width: 1; }
+      .git { fill: #FBEFFF; stroke: #8250DF; stroke-width: 1.5; }
+      .arrow { fill: none; stroke: #57606A; stroke-width: 1.75; marker-end: url(#arrow); }
+      .guide { fill: none; stroke: #8250DF; stroke-width: 1; stroke-dasharray: 3 3; }
+    </style>
+  </defs>
+
+  <!-- 背景カード -->
+  <rect x="0.5" y="0.5" width="879" height="427" rx="12" fill="#FFFFFF" stroke="#D0D7DE"/>
+
+  <!-- タイトル -->
+  <text x="24" y="40" class="title">Source Control パネルのボタンは「今どの段階か」を表す</text>
+  <text x="24" y="62" class="cap">上: Orca のパネルに見えるもの（→ はそのボタンを押す）。下: 対応する git の概念</text>
+
+  <!-- 上段ラベル -->
+  <text x="24" y="88" class="cap">Orca の Source Control パネルでは</text>
+
+  <!-- 上段 1: 変更点 -->
+  <rect x="24" y="100" width="144" height="88" rx="8" class="panel"/>
+  <text x="96" y="126" class="b600 mid">変更点 2</text>
+  <rect x="36" y="140" width="120" height="28" rx="6" class="btn"/>
+  <text x="96" y="158" class="ui mid">＋ ステージオール</text>
+
+  <!-- 上段 2: ステージ済み -->
+  <path d="M168,144 H196" class="arrow"/>
+  <rect x="196" y="100" width="144" height="88" rx="8" class="panel"/>
+  <text x="268" y="126" class="ui mid">ステージ済みの変更 2</text>
+  <rect x="208" y="140" width="120" height="28" rx="6" class="btn"/>
+  <text x="268" y="158" class="ui mid">✓ Commit　⌘↩</text>
+
+  <!-- 上段 3: ブランチを公開 -->
+  <path d="M340,144 H368" class="arrow"/>
+  <rect x="368" y="100" width="144" height="88" rx="8" class="panel"/>
+  <text x="440" y="126" class="ui mid">コミット済み <tspan fill="#0969DA">↑1</tspan></text>
+  <rect x="380" y="140" width="120" height="28" rx="6" class="btn"/>
+  <text x="440" y="158" class="ui mid">ブランチを公開</text>
+
+  <!-- 上段 4: PR を作成 -->
+  <path d="M512,144 H540" class="arrow"/>
+  <rect x="540" y="100" width="144" height="88" rx="8" class="panel"/>
+  <text x="612" y="126" class="ui mid">push 済み</text>
+  <rect x="552" y="140" width="120" height="28" rx="6" class="btn"/>
+  <text x="612" y="158" class="ui mid">PR を作成</text>
+
+  <!-- 上段 5: PR #3 OPEN -->
+  <path d="M684,144 H712" class="arrow"/>
+  <rect x="712" y="100" width="144" height="88" rx="8" fill="#DAFBE1" stroke="#1A7F37" stroke-width="1.5"/>
+  <text x="784" y="130" class="head mid" fill="#1A7F37">PR #3</text>
+  <rect x="756" y="142" width="56" height="24" rx="999" fill="#FFFFFF" stroke="#1A7F37" stroke-width="1.5"/>
+  <text x="784" y="159" class="ui mid" fill="#1A7F37">OPEN</text>
+
+  <!-- 上下の対応ガイド -->
+  <path d="M96,188 V248 M268,188 V248 M440,188 V248 M612,188 V248 M784,188 V248" class="guide"/>
+
+  <!-- 下段ラベル -->
+  <text x="24" y="240" class="cap">git では</text>
+
+  <!-- 下段: git の概念 -->
+  <rect x="24" y="248" width="144" height="72" rx="8" class="git"/>
+  <text x="96" y="279" class="b600 mid">作業ツリー</text>
+  <text x="96" y="298" class="cap mid">編集したファイル</text>
+
+  <path d="M168,284 H196" class="arrow"/>
+  <rect x="196" y="248" width="144" height="72" rx="8" class="git"/>
+  <text x="268" y="279" class="b600 mid">インデックス</text>
+  <text x="268" y="298" class="cap mid">コミットする候補</text>
+
+  <path d="M340,284 H368" class="arrow"/>
+  <rect x="368" y="248" width="144" height="72" rx="8" class="git"/>
+  <text x="440" y="279" class="b600 mid">ローカルコミット</text>
+  <text x="440" y="298" class="cap mid">自分の PC の履歴</text>
+
+  <path d="M512,284 H540" class="arrow"/>
+  <rect x="540" y="248" width="144" height="72" rx="8" class="git"/>
+  <text x="612" y="279" class="b600 mid">origin</text>
+  <text x="612" y="298" class="cap mid">GitHub 上の自分のリポ</text>
+
+  <path d="M684,284 H712" class="arrow"/>
+  <rect x="712" y="248" width="144" height="72" rx="8" class="git"/>
+  <text x="784" y="279" class="b600 mid">Pull Request</text>
+  <text x="784" y="298" class="cap mid">自分のリポの main へ</text>
+
+  <!-- 下段の矢印に対応する git コマンド -->
+  <text x="182" y="340" class="mono12 mid" fill="#57606A">git add</text>
+  <text x="354" y="340" class="mono12 mid" fill="#57606A">git commit</text>
+  <text x="526" y="340" class="mono12 mid" fill="#57606A">git push</text>
+  <text x="698" y="340" class="mono12 mid" fill="#57606A">gh pr create</text>
+
+  <!-- 下帯: ポイント -->
+  <rect x="24" y="360" width="832" height="44" rx="8" fill="#F6F8FA" stroke="#D0D7DE" stroke-width="1"/>
+  <text x="40" y="387" class="body" font-weight="600">ポイント:</text>
+  <text x="102" y="387" class="body">ボタンの文言＝今どの段階か。「ブランチを公開」と出ていれば、コミットは済んでいて push がまだ、と読める</text>
+</svg>
