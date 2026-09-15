@@ -7,7 +7,7 @@
 第4弾のテーマは **PR を出した後** です。Claude Code に小さな機能を実装させて **ドラフト PR** を出し、
 PR から作った別のワークツリーの **Codex にレビューさせて GitHub にインラインコメントを投稿** させます。
 Orca の PR パネルでレビュースレッドを読んで **採否を自分で決め**、採ったものだけ Claude Code に直させ、返信とリアクションを返します。
-Ready for review にすると **CI が赤** になるので、失敗したチェックをエージェントに渡して直し（Orca の「修正」= Fix broken checks が渡す中身を自分で見ます）、**auto-merge** で PR が自分でマージされるところまでを一人で通します。
+Ready for review にすると **CI が赤** になるので、失敗したチェックをエージェントに渡して直し（Orca の「修正」= Fix broken checks が何を渡すかを知った上で、同じ中身を自分で渡します）、**auto-merge** で PR が自分でマージされるところまでを一人で通します。
 
 ## 前提
 
@@ -44,9 +44,9 @@ Issue からのワークツリー作成・PR パネル・マージの操作は�
 
 ## public で複製する理由
 
-第1〜3弾は `--private` で複製しましたが、第4弾は **`--public`** で複製します。第4弾で使う **ドラフト PR** と **ルールセット（必須チェック）** は、GitHub Free ではパブリックリポジトリでしか使えないためです。
+第1〜3弾は `--private` で複製しましたが、第4弾は **`--public`** で複製します。第4弾で使う **ルールセット（必須チェック）** と **auto-merge** は、GitHub Free ではパブリックリポジトリでしか使えないためです（ドラフト PR は private でも使えます）。
 必須チェックが無いと **自動マージを有効にする**（Enable auto-merge）も出ません（すぐマージできる PR には表示されない仕様です）。
-中身はサンプルコードと Issue・PR の本文だけで、秘密の情報はありません。有料プラン（Pro / Team）なら private のままでも同じことができます。
+中身はサンプルコードと Issue・PR の本文だけで、秘密の情報はありません。有料プラン（Pro / Team / Enterprise）なら private のままでも同じことができます。
 `--private` で作ってしまったときは `gh repo edit --visibility public --accept-visibility-change-consequences` で切り替えられます。
 
 ## このリポジトリの使い方（参加者向け）
@@ -117,6 +117,7 @@ CI（GitHub Actions）はジョブが 2 つあります。`test` は `npm test` 
 - Orca 1.4.201（日本語 UI）
 - Claude Code 2.1.272 / Codex CLI 0.154
 - gh 2.83 / Node.js 22
+- GitHub 側の手順（スクリプト、CI、レビュー投稿の API、auto-merge）は 2026-09-16 に別の複製リポジトリで CLI から再検証
 
 Orca は更新頻度が高く、画面の表記が変わることがあります。手順と画面が合わないときは
 [公式ドキュメント](https://www.onorca.dev/docs) を確認してください。

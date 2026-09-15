@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 568" width="880" height="568" role="img" aria-labelledby="t d">
   <title id="t">必須チェックと auto-merge の関係</title>
-  <desc id="d">3 段の図。上段はルールセット main-required-checks が main を守る層: 必須チェックは test と changelog（GitHub Actions のジョブ名）、main の削除と force push を禁止、直接 push もできない（チェックが付かないから）。中段は PR のチェック状態が 3 通り。左（黄色）は保留中（チェック実行中）: まだマージできないので「自動マージを有効にする」で予約できる。Mark ready の直後、test から changelog へ進む約 20 秒の間。中央（赤）は失敗中（changelog が赤）: まだマージできないので、ここでも予約できる。すでに予約済みなら有効のまま待つ。直して push すれば再実行される。右（緑）は両方が成功: 今すぐマージできるので普通のマージボタンが出て、予約の選択肢は出ない。予約済みなら GitHub がマージし、未予約なら自分で押す（第2弾 8-2）。中段の下に本編の流れ: 保留中に予約（7 章）→ changelog が失敗（7 章）→ 直して push すると再実行 → 両方成功 → GitHub がマージ（8 章）。下段は左から右へ 4 つの箱: 予約済み + 両方成功 → GitHub がマージ → Closes #1 で Issue が閉じる → ブランチ自動削除。赤い帯の注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る。だから差分を読んでから push し、エージェントに push させない。最下部の補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えないため、第4弾は public で複製する。</desc>
+  <desc id="d">3 段の図。上段はルールセット main-required-checks が main を守る層: 必須チェックは test と changelog（GitHub Actions のジョブ名）、main の削除と force push を禁止、直接 push もできない（チェックが付かないから）。中段は PR のチェック状態が 3 通り。左（黄色）は保留中（チェック実行中）: まだマージできないので「自動マージを有効にする」で予約できる。Mark ready の直後、test から changelog へ進む約 20 秒の間。中央（赤）は失敗中（changelog が赤）: まだマージできないので、ここでも予約できる。すでに予約済みなら有効のまま待つ。直して push すれば再実行される。右（緑）は両方が成功: 今すぐマージできるので普通のマージボタンが出て、予約の選択肢は出ない。予約済みなら GitHub がマージし、未予約なら自分で押す（第2弾 8-2）。中段の下に本編の流れ: 保留中に予約（7 章）→ changelog が失敗（7 章）→ 直して push すると再実行 → 両方成功 → GitHub がマージ（8 章）。下段は左から右へ 4 つの箱: 予約済み + 両方成功 → GitHub がマージ → Closes #1 で Issue が閉じる → ブランチ自動削除。赤い帯の注意: 予約した後の push は、チェックが緑なら誰も読まずに main に入る。だから差分を読んでから push し、エージェントに push させない。最下部の補足: GitHub Free のプライベートリポではルールセット（必須チェック）と auto-merge が使えないため、第4弾は public で複製する。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
       <path d="M0,0 L10,5 L0,10 z" fill="#57606A"/>
@@ -91,5 +91,5 @@
   <text x="40" y="507" class="body">だから、差分を読んでから push する。エージェントに commit や push をさせない（付録 E）</text>
 
   <!-- 補足 -->
-  <text x="24" y="548" class="cap">補足: GitHub Free のプライベートリポではルールセット（必須チェック）とドラフト PR が使えない。そのため第4弾は public で複製する（2 章、付録 C）</text>
+  <text x="24" y="548" class="cap">補足: GitHub Free のプライベートリポではルールセット（必須チェック）と auto-merge が使えない。そのため第4弾は public で複製する（2 章、付録 C）</text>
 </svg>

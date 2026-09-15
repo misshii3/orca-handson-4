@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 304" width="880" height="304" role="img" aria-labelledby="title desc">
   <title id="title">第4弾の道のり</title>
-  <desc id="desc">1 行のタイムライン。準備（約 20 分）は 1 前提チェック、2 public で複製し setup-repo と Issue を作る、3 プロジェクト追加と Yolo。本編（約 75 分）は 4 実装してドラフト PR、5 PR からワークツリーを作り Codex にレビュー、6 採否を決めて直し返信、7 Ready にして auto-merge 予約 → 赤、8 Fix broken checks → 自動マージ、9 後片付けと手動に戻す。付録（任意）は A 役割を入れ替える、B レビューの渡し方とワークツリーのコメント、C ルールセットと auto-merge、D トラブル対処、E 業務での判断基準。1〜9 章の下にはチェックポイントの印がある。</desc>
+  <desc id="desc">1 行のタイムライン。準備（約 20 分）は 1 前提チェック、2 public で複製し setup-repo と Issue を作る、3 プロジェクト追加と Yolo。本編（約 75 分）は 4 実装してドラフト PR、5 PR からワークツリーを作り Codex にレビュー、6 採否を決めて直し返信、7 Ready にして auto-merge 予約 → 赤、8 Fix broken checks → 自動マージ。後片付け（5 分）は 9 後片付けと手動に戻す。付録（任意）は A 役割を入れ替える、B レビューの渡し方とワークツリーのコメント、C ルールセットと auto-merge、D トラブル対処、E 業務での判断基準。1〜9 章の下にはチェックポイントの印がある。</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
       <path d="M1 1L9 5L1 9z" fill="#57606A"/>
@@ -25,7 +25,7 @@
     </g>
     <g font-weight="600" text-anchor="middle">
       <text x="115" y="92">準備（約 20 分）</text>
-      <text x="362" y="92">本編（約 75 分）</text>
+      <text x="362" y="92">本編（約 75 分）＋ 後片付け（5 分）</text>
       <text x="665" y="92">付録（任意）</text>
     </g>
 
