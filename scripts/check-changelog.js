@@ -6,7 +6,7 @@
  *   PR では CHANGELOG.md の「## 未リリース」に変更内容を 1 行追加し、行末に Issue 番号を (#N) の形で書く。
  *
  * 確認すること:
- *   1. 比較元（origin/main）との差分に CHANGELOG.md が含まれている
+ *   1. 比較元（origin/main）との差分に CHANGELOG.md が含まれている（コミット前の作業ツリーの変更も数える）
  *   2. 「## 未リリース」の節に、比較元にはない箇条書き（- で始まる行）が増えている
  *   3. 増えた行に (#N) がある
  *   4. PR 本文かコミットメッセージに Closes #N があれば、その N と (#N) が一致する
@@ -116,7 +116,8 @@ function main() {
     process.exitCode = 1;
     return;
   }
-  const changed = (git("diff", "--name-only", mergeBase, "HEAD") ?? "").split("\n").filter(Boolean);
+  // 比較元と「作業ツリー」の差分（コミット前の変更も含む）。CI では作業ツリー = HEAD なので結果は同じ
+  const changed = (git("diff", "--name-only", mergeBase) ?? "").split("\n").filter(Boolean);
   if (changed.length === 0) {
     console.log(`[OK] ${baseRef} との差分がありません（確認するものがありません）`);
     return;
