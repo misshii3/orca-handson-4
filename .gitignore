@@ -1,0 +1,12 @@
+# 依存パッケージ（このサンプルは使いませんが念のため）
+node_modules/
+
+# macOS
+.DS_Store
+
+# Claude Code の計画ファイル（資料には含めない）
+plans/
+
+# ローカル設定
+.claude/
+.codex/

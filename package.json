@@ -1,0 +1,16 @@
+{
+  "name": "orca-handson-4",
+  "version": "0.3.0",
+  "description": "Orca ハンズオン 第4弾用のミニサンプル。第3弾完了状態の注文確認ページに機能を 1 つ足し、PR のレビューコメント対応・赤いチェックの修正・自動マージまでを通します。",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "test": "node --test --test-reporter=spec",
+    "check:changelog": "node scripts/check-changelog.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

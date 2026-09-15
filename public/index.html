@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>注文確認 | Orca ハンズオン 第4弾</title>
+  <!-- favicon の 404 をコンソールに出さないための空アイコン -->
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page">
+    <h1 class="page-title">ご注文内容の確認</h1>
+
+    <section class="card" id="items-card">
+      <h2 class="card-title">商品</h2>
+      <table class="items-table" id="items-table">
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th class="col-num">数量</th>
+            <th class="col-num">単価</th>
+            <th class="col-num">金額</th>
+          </tr>
+        </thead>
+        <!-- 行は app.js が描く -->
+        <tbody id="items-body"></tbody>
+      </table>
+    </section>
+
+    <section class="card" id="summary-card">
+      <h2 class="card-title">お支払い金額</h2>
+      <dl class="summary">
+        <div class="summary-row"><dt>小計</dt><dd id="subtotal"></dd></div>
+        <div class="summary-row" id="coupon-row"><dt>クーポン割引（<span id="coupon-code"></span>）</dt><dd id="discount"></dd></div>
+        <div class="summary-row"><dt>送料</dt><dd id="shipping"></dd></div>
+        <div class="summary-row summary-total"><dt>合計（税込）</dt><dd id="total"></dd></div>
+      </dl>
+      <!-- Issue #1: 送料無料までの残額の表示はここに追加する -->
+      <p class="delivery">お届け予定日: <time id="delivery-date"></time></p>
+      <form class="coupon-form" id="coupon-form">
+        <label for="coupon-input">クーポンコード</label>
+        <input type="text" id="coupon-input" name="coupon" autocomplete="off">
+        <button type="submit" id="coupon-apply">適用</button>
+      </form>
+      <p class="coupon-message" id="coupon-message" role="status"></p>
+      <button type="button" class="btn-primary" id="confirm-button">注文を確定する</button>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

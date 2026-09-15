@@ -1,0 +1,206 @@
+/* 注文確認ページのスタイル */
+
+:root {
+  --color-bg: #f4f5f7;        /* ページ背景 */
+  --color-surface: #ffffff;   /* カード背景 */
+  --color-text: #1f2328;      /* 本文 */
+  --color-muted: #6b7280;     /* 補助テキスト */
+  --color-border: #e5e7eb;    /* 罫線 */
+  --color-accent: #d6336c;    /* 強調（合計金額） */
+  --color-primary: #2563eb;   /* ボタン */
+  --color-error: #c62828;     /* エラーメッセージ */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  line-height: 1.6;
+}
+
+/* 2 カラム（左: 商品、右: お支払い金額）。狭い画面では 1 カラムにする */
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 24px;
+}
+
+.page-title {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 720px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  min-width: 0; /* グリッドの列幅より大きい中身があってもカードを広げない */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.card-title {
+  margin: 0 0 16px;
+  font-size: 1.1rem;
+}
+
+/* ---- 商品一覧 ---- */
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th,
+.items-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.items-table th {
+  color: var(--color-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* 数値の列（2 列目以降）は折り返さない */
+.items-table th:not(:first-child),
+.items-table td:not(:first-child) {
+  white-space: nowrap;
+}
+
+/* 数量・単価・金額の列は右寄せ（数値は桁をそろえて読む）。
+   上の .items-table th, .items-table td より詳細度を高くして効かせる */
+.items-table .col-num {
+  text-align: right;
+}
+
+/* ---- お支払い金額 ---- */
+
+.summary {
+  margin: 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.summary-row dt {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.summary-row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.summary-total {
+  border-bottom: none;
+  padding-top: 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.summary-total dt {
+  color: var(--color-text);
+}
+
+/* 合計金額は強調色で目立たせる */
+.summary-total dd {
+  color: var(--color-accent);
+}
+
+.delivery {
+  margin: 16px 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+/* ---- 注文ボタン ---- */
+
+.btn-primary {
+  display: block;
+  margin-top: 24px;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.05);
+}
+
+/* ---- クーポン入力欄（第3弾 Issue #2 で追加） ---- */
+
+.coupon-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.coupon-form label {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.coupon-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.coupon-form button {
+  padding: 8px 14px;
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 適用結果のメッセージ。空でも高さを確保して、表示時にレイアウトが動かないようにする */
+.coupon-message {
+  margin: 8px 0 0;
+  min-height: 1.6em;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+/* 使えないコードのときは赤系で目立たせる */
+.coupon-message.is-error {
+  color: var(--color-error);
+}
+
+/* ---- ここから下に新しいスタイルを追加する（第4弾 Issue #1 など） ---- */

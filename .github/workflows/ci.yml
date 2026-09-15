@@ -1,0 +1,42 @@
+# PR と main への push で npm test を実行し、PR では CHANGELOG のルールも確認する。
+# 結果は GitHub の PR ページと、Orca の PR パネルの「チェック」に表示される。
+# main の ruleset（scripts/setup-repo.sh）は、この 2 つのジョブ名 test / changelog を必須チェックにしている。
+name: CI
+
+on:
+  pull_request:
+    # 既定の 3 つに ready_for_review を足す。ドラフトを「レビュー準備完了」にした瞬間に changelog を走らせるため
+    types: [opened, synchronize, reopened, ready_for_review]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  changelog:
+    # ドラフト PR と main への push では走らせない（下書きの間はルールを強制しない）
+    if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+    # テストが通ってから確認する（PR パネルで test → changelog と順に進むのが見える）
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # origin/main との差分を取るため、全履歴を取得する
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm run check:changelog
+        env:
+          # PR 本文に Closes #N があれば、CHANGELOG の (#N) と突き合わせる
+          PR_BODY: ${{ github.event.pull_request.body }}
